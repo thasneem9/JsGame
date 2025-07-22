@@ -3,7 +3,8 @@ canvas.width=window.innerWidth
 canvas.height=window.innerHeight
 const c=canvas.getContext('2d')
 
-
+const platformImage=new Image()
+platformImage.src='./assets/platform.png'
 const gravity=1
 var progressValue=0
 class Player{
@@ -74,17 +75,19 @@ class Player{
 }
 
 class Platform{
-    constructor({x,y}){
+    constructor({x,y,image}){
         this.position={
             x:x,
             y:y
         }
         this.height=20,
-        this.width=200
+        this.width=200,
+        this.image=image
     }
     draw(){
         c.fillStyle='red'
-        c.fillRect(this.position.x,this.position.y,this.width,this.height)
+      /*   c.fillRect(this.position.x,this.position.y,this.width,this.height) */
+      c.drawImage(this.image,this.position.x,this.position.y)
     }
 }
 const keys={
@@ -136,10 +139,10 @@ if(progressValue>3720){
 
 const player=new Player()
 const platforms=[
-    new Platform({x:200,y:300}),
-    new Platform({x:370,y:400}),
-     new Platform({x:800,y:250}),
-     new Platform({x:1200,y:450}),
+    new Platform({x:200,y:300,image:platformImage}),
+    new Platform({x:370,y:400,image:platformImage}),
+     new Platform({x:800,y:250,image:platformImage}),
+     new Platform({x:1200,y:450,image:platformImage}),
 ]
 
 animate()
