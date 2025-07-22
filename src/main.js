@@ -1,4 +1,19 @@
 import platformImageSrc from './assets/platform.jpg'
+import backgroundImageSrc from './assets/background.jpg'
+import icebergImageSrc from './assets/iceberg4.jpg'
+import icebergImageSrc2 from './assets/icebergMiddle2.jpg'
+
+
+const platformImage=new Image()
+platformImage.src=platformImageSrc
+
+const backgroundImage=new Image()
+backgroundImage.src=backgroundImageSrc
+
+const icebergImage=new Image()
+icebergImage.src=icebergImageSrc
+const icebergImage2=new Image()
+icebergImage2.src=icebergImageSrc2
 
 
 const canvas=document.querySelector('canvas')
@@ -8,8 +23,9 @@ canvas.width=1795
 canvas.height=876
 const c=canvas.getContext('2d')
 
-const platformImage=new Image()
-platformImage.src=platformImageSrc
+
+
+
 const gravity=1
 var progressValue=0
 class Player{
@@ -62,14 +78,27 @@ class Player{
      if(keys.right.pressed){
         platforms.forEach(platform=>{
             platform.position.x -= 5
-            progressValue+=10
+           
         })
+         progressValue+=10
+
+         iceberg.position.x-=3
+         iceberg2.position.x-=3
+         bgImage.position.x-=3
+         bgImage2.position.x-=3
+
         console.log(progressValue)
      }else if(keys.left.pressed){
        platforms.forEach(platform=>{
          platform.position.x+=5
-         progressValue-=10
+          
        })
+       progressValue-=10
+       
+          iceberg.position.x+=3
+         iceberg2.position.x+=3
+         bgImage.position.x+=3
+         bgImage2.position.x+=3
      }
 
     }
@@ -95,6 +124,46 @@ class Platform{
       c.drawImage(this.image,this.position.x,this.position.y)
     }
 }
+
+class BackgroundImage{
+    constructor({x,y,image}){
+        this.position={
+            x:x,
+            y:y
+        }
+        this.height=740,
+        this.width=1795,
+        this.image=image
+    }
+    draw(){
+        c.fillStyle='red'
+      /*   c.fillRect(this.position.x,this.position.y,this.width,this.height) */
+      c.drawImage(this.image,this.position.x,this.position.y,this.width,this.height)
+    }
+}
+class IceBerg{
+    constructor({x,y,image}){
+        this.position={
+            x:x,
+            y:y
+        }
+        this.height=image.height,
+        this.width=image.width,
+        this.image=image
+    }
+    draw(){
+        c.fillStyle='red'
+      /*   c.fillRect(this.position.x,this.position.y,this.width,this.height) */
+      c.drawImage(this.image,this.position.x,this.position.y,this.width,this.height)
+    }
+}
+const bgImage=new BackgroundImage({x:0,y:0,image:backgroundImage})
+const bgImage2=new BackgroundImage({x:1795,y:0,image:backgroundImage})
+
+
+const iceberg=new IceBerg( {x:0,y:0,image:icebergImage})
+const iceberg2=new IceBerg( {x:800,y:0,image:icebergImage2})
+
 const keys={
     right:{
         pressed:false
@@ -114,10 +183,18 @@ function animate(){
     c.fillRect(0,0,canvas.width,canvas.height)
 
    
-   
+   bgImage.draw()
+   bgImage2.draw()
+ 
+
+   iceberg.draw()
+  iceberg2.draw()
+
   platforms.forEach(platform=>{
       platform.draw()
   })
+  
+
  player.update()
     //collision detection:when to NOTTTTT fall
    platforms.forEach(platform=>{
@@ -146,7 +223,16 @@ if(progressValue>3720){
 const player=new Player()
 const platforms=[
     new Platform({x:0,y:740,image:platformImage}),
-    new Platform({x:360,y:740,image:platformImage})
+    new Platform({x:360,y:740,image:platformImage}),
+    new Platform({x:720,y:740,image:platformImage}),
+    new Platform({x:1080,y:740,image:platformImage}),
+    new Platform({x:1440,y:740,image:platformImage}),
+    new Platform({x:1800,y:740,image:platformImage}),
+
+
+    new Platform({x:720,y:370,image:platformImage}),
+    
+
     
 ]
 
