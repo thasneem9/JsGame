@@ -59,8 +59,6 @@ class Player{
         this.velocity.y+=gravity  // +=0.5 after evry frame-------OR-------incrase velocity after very frame[gradualy like gravity irl....]
         ///cz garvity stos whn u hit ground
 
-    }else{
-        this.velocity.y=0//stop faling
     }
 
 //MOVEMENTS OFP LAYER 
@@ -131,7 +129,7 @@ class BackgroundImage{
             x:x,
             y:y
         }
-        this.height=740,
+        this.height=/* 740 */876,
         this.width=1795,
         this.image=image
     }
@@ -176,6 +174,38 @@ const keys={
     }
 
 }
+function init() {
+    player = new Player();
+
+    platforms = [
+        new Platform({ x: 0, y: 740, image: platformImage }),
+        new Platform({ x: 360, y: 740, image: platformImage }),
+        new Platform({ x: 720, y: 740, image: platformImage }),
+        new Platform({ x: 1080, y: 740, image: platformImage }),
+        new Platform({ x: 1440, y: 740, image: platformImage }),
+        new Platform({ x: 1800, y: 740, image: platformImage }),
+        /* death pit */
+        new Platform({ x: 2460, y: 740, image: platformImage }),
+        new Platform({ x: 2820, y: 740, image: platformImage }),
+        new Platform({ x: 720, y: 370, image: platformImage }),
+    ];
+
+    // Reset background and iceberg positions
+    bgImage.position.x = 0;
+    bgImage2.position.x = 1795;
+
+    iceberg.position.x = 0;
+    iceberg2.position.x = 800;
+
+    // Reset progress
+    progressValue = 0;
+
+    // Reset key presses (optional)
+    keys.right.pressed = false;
+    keys.left.pressed = false;
+    keys.up.pressed = false;
+}
+
 
 function animate(){
     requestAnimationFrame(animate)
@@ -217,17 +247,25 @@ if(progressValue>3720){
     console.log('You Win')
 }
 
+//loose : death pit
+if(player.position.y>canvas.height){
+   
+    init()
 
 }
+}
 
-const player=new Player()
-const platforms=[
+let player=new Player()
+let platforms=[
     new Platform({x:0,y:740,image:platformImage}),
     new Platform({x:360,y:740,image:platformImage}),
     new Platform({x:720,y:740,image:platformImage}),
     new Platform({x:1080,y:740,image:platformImage}),
     new Platform({x:1440,y:740,image:platformImage}),
     new Platform({x:1800,y:740,image:platformImage}),
+    /* SuperficiL Death Pit>2160 */
+    new Platform({x:2460,y:740,image:platformImage}),
+    new Platform({x:2820,y:740,image:platformImage}),
 
 
     new Platform({x:720,y:370,image:platformImage}),
